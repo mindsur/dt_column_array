@@ -1,0 +1,53 @@
+{% include 'base.html' %}
+
+{% block extra_stylesheets %}
+  <link href="https://cdn.datatables.net/1.10.10/css/jquery.dataTables.css" rel="stylesheet">
+{% endblock %}
+
+{% block content %}
+  <div class="row">
+    <div class="col-lg-12">
+      <h2>DataTables 1.10.x example: Users and their address.</h2>
+      <table id="dt_110x" class="display" cellspacing="0" width="100%">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>First name</th>
+            <th>Last name</th>
+            <th>Email</th>
+            <th>IP</th>
+            <th>Country</th>
+            <th>Address</th>
+            <th>Date joined</th>
+            <th>City array</th>
+          </tr>
+        </thead>
+      <tbody></tbody>
+    </table>
+  </div>
+</div>
+{% endblock %}
+
+{% block extra_javascripts %}
+  <script src="https://cdn.datatables.net/1.10.10/js/jquery.dataTables.min.js"></script>
+  <script type="text/javascript" charset="utf-8">
+    $(document).ready(function () {
+      var table = $('#dt_110x').DataTable({
+        processing: true,
+        serverSide: true,
+        ajax: "{{ url_for('data') }}",
+        columns: [
+          {"name": "id", "data": "id"},
+          {"name": "first_name", "data": "first_name"},
+          {"name": "last_name", "data": "last_name"},
+          {"name": "email", "data": "email"},
+          {"name": "ip_address", "data": "ip_address"},
+          {"name": "country", "data": "country"},
+          {"name": "Address_description", "data": "Address_description", "title": "Address"},
+          {"name": "date_joined", "data": "date_joined"},
+          {"name": "city_array", "data": "city_array"},
+        ]
+      });
+    });
+  </script>
+{% endblock %}

@@ -1,0 +1,37 @@
+<table class="table" id="clients_list">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>First name</th>
+            <th>Last name</th>
+            <th>Email</th>
+            <th>IP</th>
+            <th>Country</th>
+            <th>Date joined</th>
+        </tr>
+    </thead>
+    <tbody>
+    </tbody>
+</table>
+
+{% block extra_javascripts %}
+  <script src="https://cdn.datatables.net/1.10.10/js/jquery.dataTables.min.js"></script>
+  <script type="text/javascript" charset="utf-8">
+    $(document).ready(function () {
+      var table = $("#clients_list").DataTable({
+        serverSide: true,
+        processing: true,
+        ajax: "{{ url_for('datatables') }}",
+        columns: [
+            {
+                data: "id",
+                "render": function(data, type, row){
+                    return $("<div>").append($("<a/>").attr("href", row.DT_RowData.link).text(data)).html();
+                }
+            },
+            { data: "name" },
+            { data: "address" },
+        ]
+    });
+    </script>
+{% endblock %}
